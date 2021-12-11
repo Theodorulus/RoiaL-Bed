@@ -1,9 +1,9 @@
 # RoiaL-Bed
 
 ### Requirements:
--1) Install museqito Mqtt broker, if you do not have one already, following: http://www.steves-internet-guide.com/install-mosquitto-broker/
+  1) Install museqito Mqtt broker, if you do not have one already, following: http://www.steves-internet-guide.com/install-mosquitto-broker/
 Note: To run the mosquitto broker, you must enter `mosquitto` command in terminal at the mosquitto installation folder (by default being "C:\Program files\mosquitto")
--2) Install app dependencies
+  2) Install app dependencies
 Run: 
 `pip install -r dependencies.txt`
 
