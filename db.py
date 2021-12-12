@@ -24,7 +24,7 @@ def close_db(e=None):
 
 def init_db():
     db = get_db()
-
+    print("checkpoint")
     with open('schema.sql', encoding='utf8') as f:
         db.executescript(f.read())
 
@@ -37,5 +37,6 @@ def init_db_command():
     click.echo('Initialized the database.')
 
 def init_app(app):
+    init_db()
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
