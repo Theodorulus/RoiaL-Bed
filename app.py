@@ -7,9 +7,11 @@ import time
 import db
 import src.models.status as status
 from src.example_endpoint import example_endpoint
+from src.height import height_bp
+from src.mode_selection import mode_bp
 
 app = None
-mqtt= None
+mqtt = None
 def start_app():
     global app, mqtt
     app = Flask(__name__)
@@ -22,15 +24,16 @@ def start_app():
 
     # register blueprints
     app.register_blueprint(example_endpoint)
+    app.register_blueprint(height_bp)
+    app.register_blueprint(mode_bp)
     mqtt = Mqtt(app)
 
     with app.app_context():
         db.init_app(app)
 
-
     return app
     
-# fucntion for mqtt's thread    
+# function for mqtt's thread    
 def background_thread():
     while True:
         time.sleep(1)
