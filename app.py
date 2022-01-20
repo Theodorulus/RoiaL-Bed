@@ -8,6 +8,7 @@ import src.models.status as status
 from src.example_endpoint import example_endpoint
 from src.height import height_bp
 from src.mode_selection import mode_bp
+from src.temperature import temperature_bp
 
 app = None
 mqtt = None
@@ -27,6 +28,7 @@ def start_app():
     app.register_blueprint(example_endpoint)
     app.register_blueprint(height_bp)
     app.register_blueprint(mode_bp)
+    app.register_blueprint(temperature_bp)
     mqtt = Mqtt(app)
 
     with app.app_context():
