@@ -23,6 +23,8 @@ def start_app():
     app.config['MQTT_KEEPALIVE'] = 5
     app.config['MQTT_TLS_ENABLED'] = False
 
+    app.url_map.strict_slashes = False
+
     # register blueprints
     app.register_blueprint(example_endpoint)
     app.register_blueprint(height_bp)
