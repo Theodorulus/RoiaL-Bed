@@ -25,7 +25,7 @@ def close_db(e=None):
 
 def init_db():
     db = get_db()
-    print("checkpoint")
+    print("Database initialised.")
     with open('schema.sql', encoding='utf8') as f:
         db.executescript(f.read())
 

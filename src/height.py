@@ -8,7 +8,7 @@ from db import get_db
 height_bp = Blueprint('height', __name__, url_prefix='/height')
 
 
-@height_bp.route('/', methods=('GET', 'POST'))
+@height_bp.route('/', methods=['GET', 'POST'])
 # @login_required
 def set_height():
     if request.method == 'POST':

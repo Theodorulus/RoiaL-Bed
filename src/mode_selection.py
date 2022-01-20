@@ -8,7 +8,7 @@ from db import get_db
 mode_bp = Blueprint('mode_selection', __name__, url_prefix='/mode-selection')
 
 
-@mode_bp.route('/', methods=('GET', 'POST'))
+@mode_bp.route('/', methods=['GET', 'POST'])
 # @login_required
 def select_mode():
     if request.method == 'POST':
@@ -69,7 +69,7 @@ def select_mode():
     }), 200
 
 
-@mode_bp.route('/create', methods='POST')
+@mode_bp.route('/create', methods=['POST'])
 # @login_required
 def create_mode():
     mode = request.form['mode']
