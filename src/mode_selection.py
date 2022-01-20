@@ -58,7 +58,7 @@ def select_mode():
     ).fetchone()
 
     return jsonify({
-        'status': request.method == 'POST' ? 'Mode successfully selected.' : 'Mode successfully retrieved.',
+        'status': 'Mode successfully selected.' if request.method == 'POST' else 'Mode successfully retrieved.',
         'data': {
             'id': check['id'],
             'mode': check['value'],
@@ -77,6 +77,7 @@ def create_mode():
     if not mode or not height or not temperature:
         return jsonify({'status': 'Mode has missing values.'}), 400
 
+    db = get_db()
     db.execute(
         'INSERT INTO modes (value, height, temperature)'
         'VALUES (?, ?, ?)',
