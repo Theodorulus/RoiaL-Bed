@@ -79,6 +79,7 @@ def create_mode():
     if not mode or not height or not temperature:
         return jsonify({'status': 'Mode has missing values.'}), 400
 
+    db = get_db()
     db.execute(
         'INSERT INTO modes (value, height, temperature)'
         'VALUES (?, ?, ?)',
