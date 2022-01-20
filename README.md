@@ -43,5 +43,5 @@ To run unit tests, use
 `python -m pytest -v`
 
 To see unit tests coverage, use
-`coverage -m pytest -v`
+`coverage run -m pytest -v`
 `coverage report`
