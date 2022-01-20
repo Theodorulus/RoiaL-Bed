@@ -36,3 +36,12 @@ The app subscribes to the "smart_bed" topic of the broker connected to the local
 Having the mosquitto broker and the app running, open a new terminal and navigate to the mosquitto installation folder. There run the command:
 `mosquitto_sub -t smart_bed -v`
 You now should be able to read the messages published by the app
+
+
+### Unit tests
+To run unit tests, use 
+`python -m pytest -v`
+
+To see unit tests coverage, use
+`coverage -m pytest -v`
+`coverage report`
