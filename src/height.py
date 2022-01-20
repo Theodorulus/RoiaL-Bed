@@ -7,6 +7,7 @@ from db import get_db
 
 height_bp = Blueprint('height', __name__, url_prefix='/height')
 
+
 @height_bp.route('/', methods=('GET', 'POST'))
 # @login_required
 def set_height():
@@ -31,7 +32,7 @@ def set_height():
     ).fetchone()
 
     return jsonify({
-        'status': request.method == 'POST' ? 'Height succesfully updated.' : "Height successfully retrieved.",
+        'status': 'Height succesfully updated.' if request.method == 'POST' else "Height successfully retrieved.",
         'data': {
             'id': check['id'],
             'last_updated': check['timestamp'],

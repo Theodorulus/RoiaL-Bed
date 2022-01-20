@@ -7,6 +7,7 @@ from db import get_db
 
 mode_bp = Blueprint('mode_selection', __name__, url_prefix='/mode-selection')
 
+
 @mode_bp.route('/', methods=('GET', 'POST'))
 # @login_required
 def select_mode():
@@ -58,7 +59,7 @@ def select_mode():
     ).fetchone()
 
     return jsonify({
-        'status': request.method == 'POST' ? 'Mode successfully selected.' : 'Mode successfully retrieved.',
+        'status': 'Mode successfully selected.' if request.method == 'POST' else 'Mode successfully retrieved.',
         'data': {
             'id': check['id'],
             'mode': check['value'],
@@ -67,7 +68,8 @@ def select_mode():
         }
     }), 200
 
-@mode_bp.route('/create', methods=('POST'))
+
+@mode_bp.route('/create', methods='POST')
 # @login_required
 def create_mode():
     mode = request.form['mode']

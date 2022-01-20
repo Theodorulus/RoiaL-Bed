@@ -22,6 +22,7 @@ def close_db(e=None):
     if db is not None:
         db.close()
 
+
 def init_db():
     db = get_db()
     print("checkpoint")
@@ -35,6 +36,7 @@ def init_db_command():
     """Clear the existing data and create new tables."""
     init_db()
     click.echo('Initialized the database.')
+
 
 def init_app(app):
     init_db()

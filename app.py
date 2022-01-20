@@ -1,4 +1,3 @@
-
 from flask import Flask
 from flask_mqtt import Mqtt
 from threading import Thread
@@ -12,6 +11,8 @@ from src.mode_selection import mode_bp
 
 app = None
 mqtt = None
+
+
 def start_app():
     global app, mqtt
     app = Flask(__name__)
@@ -32,13 +33,15 @@ def start_app():
         db.init_app(app)
 
     return app
-    
+
+
 # function for mqtt's thread    
 def background_thread():
     while True:
         time.sleep(1)
         message = json.dumps(status.get_status(), default=str)
         mqtt.publish('smart_bed', message)
+
 
 def init_mqtt_thread():
     thread = Thread(target=background_thread)
