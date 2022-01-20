@@ -19,43 +19,43 @@ def select_mode():
 
         db = get_db()
         check = get_db().execute(
-            'SELECT id, value, height, temperature'
-            'FROM modes'
-            'WHERE value = ?',
+            """SELECT id, value, height, temperature
+            FROM modes
+            WHERE value = ?""",
             (mode,)
         ).fetchone()
         if not check:
             return jsonify({'status': 'Mode is not valid.'}), 400
 
         db.execute(
-            'UPDATE modes'
-            'SET active = 0'
-            'WHERE active = 1'
+            """UPDATE modes
+            SET active = 0
+            WHERE active = 1"""
         )
         db.execute(
-            'UPDATE modes'
-            'SET active = 1'
-            'WHERE value = ?',
+            """UPDATE modes
+            SET active = 1
+            WHERE value = ?""",
             (mode,)
         )
         # set other features to some default values depending on the mode
         db.execute(
-            'INSERT INTO heights (value)'
-            'VALUES (?)',
+            """INSERT INTO heights (value)
+            VALUES (?)""",
             (check['height'],)
         )
         db.execute(
-            'INSERT INTO temperatures (value)'
-            'VALUES (?)',
+            """INSERT INTO temperatures (value)
+            VALUES (?)""",
             (check['temperature'],)
         )
         # other
         db.commit()
 
     check = get_db().execute(
-        'SELECT id, value, height, temperature'
-        'FROM modes'
-        'WHERE active = 1'
+        """SELECT id, value, height, temperature
+        FROM modes
+        WHERE active = 1"""
     ).fetchone()
 
     return jsonify({
@@ -81,16 +81,16 @@ def create_mode():
 
     db = get_db()
     db.execute(
-        'INSERT INTO modes (value, height, temperature)'
-        'VALUES (?, ?, ?)',
+        """INSERT INTO modes (value, height, temperature)
+        VALUES (?, ?, ?)""",
         (mode, height, temperature,)
     )
     db.commit()
 
     check = get_db().execute(
-        'SELECT id, value, height, temperature'
-        'FROM modes'
-        'ORDER BY timestamp DESC'
+        """SELECT id, value, height, temperature
+        FROM modes
+        ORDER BY timestamp DESC"""
     ).fetchone()
 
     return jsonify({
