@@ -3,6 +3,7 @@ __pycache__/
 *.py[cod]
 
 venv
+flaskr.sqlite
 
 # Unit test / coverage reports
 .tox/
