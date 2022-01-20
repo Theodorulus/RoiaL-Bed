@@ -8,7 +8,7 @@ from db import get_db
 height_bp = Blueprint('height', __name__, url_prefix='/height')
 
 
-@height_bp.route('/', methods=('GET', 'POST'))
+@height_bp.route('/', methods=['GET', 'POST'])
 # @login_required
 def set_height():
     if request.method == 'POST':
@@ -19,16 +19,17 @@ def set_height():
 
         db = get_db()
         db.execute(
-            'INSERT INTO heights (value)'
-            'VALUES (?)',
+            """INSERT INTO heights (value)
+            VALUES (?)""",
             (height,)
         )
         db.commit()
     
     check = get_db().execute(
-        'SELECT id, timestamp, value'
-        'FROM heights'
-        'ORDER BY timestamp DESC'
+        """SELECT *
+        FROM heights
+        ORDER BY TIMESTAMP DESC
+        LIMIT 1"""
     ).fetchone()
 
     return jsonify({
