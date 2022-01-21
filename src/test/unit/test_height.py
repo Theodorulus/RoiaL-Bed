@@ -3,17 +3,19 @@ from client import client
 from flask import jsonify
 import json
 
-"""Initialize the testing environment
+def test_set_height_fail(client):
+    request = client.post("/height", data={}, follow_redirects=True)
+    response = json.loads(request.data.decode())
+    assert request.status_code == 400
+    assert response['status'] == 'Height is required.'
 
-Creates an app for testing that has the configuration flag ``TESTING`` set to
-``True``.
-
-"""
-
+def test_set_height_success(client):
+    request = client.post("/height", data={"height": 15}, follow_redirects=True)
+    assert request.status_code == 200
+    assert json.loads(request.data.decode())["data"]["height"] == 15
 
 def test_get_height(client):
-    rv = client.post("/height", data={"height": 10}, follow_redirects=True)
+    client.post("/height", data={"height": 10}, follow_redirects=True)
     request = client.get("/height")
-    # assert request.status_code == 405
     assert request.status_code == 200
     assert json.loads(request.data.decode())["data"]["height"] == 10

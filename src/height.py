@@ -2,20 +2,20 @@ from flask import (
     Blueprint, request, jsonify
 )
 from datetime import datetime
-# from auth import login_required
+from src.auth import login_required
 from db import get_db
 
 height_bp = Blueprint('height', __name__, url_prefix='/height')
 
 
 @height_bp.route('/', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def set_height():
     if request.method == 'POST':
-        height = request.form['height']
-
-        if not height:
+        if 'height' not in request.form:
             return jsonify({'status': 'Height is required.'}), 400
+
+        height = request.form['height']
 
         db = get_db()
         db.execute(

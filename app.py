@@ -9,6 +9,7 @@ from src.example_endpoint import example_endpoint
 from src.height import height_bp
 from src.mode_selection import mode_bp
 from src.temperature import temperature_bp
+from src.auth import auth_bp
 
 app = None
 mqtt = None
@@ -24,9 +25,11 @@ def start_app():
     app.config['MQTT_KEEPALIVE'] = 5
     app.config['MQTT_TLS_ENABLED'] = False
 
+    app.config.from_mapping(SECRET_KEY='shhhhhh',)
     app.url_map.strict_slashes = False
 
     # register blueprints
+    app.register_blueprint(auth_bp)
     app.register_blueprint(example_endpoint)
     app.register_blueprint(height_bp)
     app.register_blueprint(mode_bp)

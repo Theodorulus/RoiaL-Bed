@@ -4,12 +4,13 @@ from flask import (
 # from auth import login_required
 from db import get_db
 import requests
+from src.auth import login_required
 
 temperature_bp = Blueprint('temperature', __name__, url_prefix='/temperature')
 
 
 @temperature_bp.route('/', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def set_temperature():
     if request.method == 'POST':
         temperature = request.form['temperature']
@@ -44,7 +45,7 @@ def set_temperature():
 
 
 @temperature_bp.route('/realtime', methods=['GET'])
-# @login_required
+@login_required
 def get_temperature():
     api_key = "778aeb380a12577397fc7d4e1a86a31f"
 

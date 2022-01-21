@@ -4,18 +4,19 @@ from flask import (
 from datetime import datetime
 # from auth import login_required
 from db import get_db
+from src.auth import login_required
 
 mode_bp = Blueprint('mode_selection', __name__, url_prefix='/mode-selection')
 
 
 @mode_bp.route('/', methods=['GET', 'POST'])
-# @login_required
+@login_required
 def select_mode():
     if request.method == 'POST':
-        mode = request.form['mode']
-
-        if not mode:
+        if 'mode' not in request.form:
             return jsonify({'status': 'Mode is required.'}), 400
+
+        mode = request.form['mode']
 
         db = get_db()
         check = get_db().execute(
@@ -70,14 +71,14 @@ def select_mode():
 
 
 @mode_bp.route('/create', methods=['POST'])
-# @login_required
+@login_required
 def create_mode():
+    if 'mode' not in request.form or 'height' not in request.form or 'temperature' not in request.form:
+        return jsonify({'status': 'Mode has missing values.'}), 400
+
     mode = request.form['mode']
     height = request.form['height']
     temperature = request.form['temperature']
-
-    if not mode or not height or not temperature:
-        return jsonify({'status': 'Mode has missing values.'}), 400
 
     db = get_db()
     db.execute(
