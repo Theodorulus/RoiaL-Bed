@@ -59,3 +59,8 @@ def test_logout(client):
     request = client.get('/auth/logout')
     assert request.status_code == 200
     assert json.loads(request.data.decode())["status"] == 'User logged out succesfully'
+
+def test_get_height_no_login(client_no_login):
+    request = client_no_login.get("/height")
+    assert request.status_code == 401
+    assert json.loads(request.data.decode())["status"] == 'User is not authenticated'
