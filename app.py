@@ -9,6 +9,7 @@ from src.example_endpoint import example_endpoint
 from src.height import height_bp
 from src.mode_selection import mode_bp
 from src.temperature import temperature_bp
+from src.music import music_bp
 
 app = None
 mqtt = None
@@ -31,6 +32,7 @@ def start_app():
     app.register_blueprint(height_bp)
     app.register_blueprint(mode_bp)
     app.register_blueprint(temperature_bp)
+    app.register_blueprint(music_bp)
     mqtt = Mqtt(app)
 
     with app.app_context():
