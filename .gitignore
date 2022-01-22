@@ -11,3 +11,4 @@ flaskr.sqlite
 .cache
 nosetests.xml
 coverage.xml
+.vscode/settings.json
