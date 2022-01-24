@@ -29,7 +29,7 @@ class Status():
     def get_status(): 
         db= get_db().cursor()
         
-        selectedMode = db.execute("select * from modes where active == 1 limit 1" ).fetchone()
+        selectedMode = db.execute("select * from modes where active = 1 limit 1" ).fetchone()
         if selectedMode:
           selectedMode = selectedMode['id']
         
@@ -38,7 +38,7 @@ class Status():
           for alarm in futureAlarms:
             alarm = dict(zip(alarm.keys(), alarm))
             
-        lastPlayedSong = db.execute("select * from songs where active == 1 limit 1" ).fetchone()
+        lastPlayedSong = db.execute("select * from songs where active = 1 limit 1" ).fetchone()
         if lastPlayedSong:
           lastPlayedSong = dict(zip(lastPlayedSong.keys(), lastPlayedSong))
           
