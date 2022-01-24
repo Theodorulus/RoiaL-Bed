@@ -57,6 +57,9 @@ def login():
 
     session.clear()
     session['user_id'] = user['id']
+    db.execute("UPDATE users SET active = 0 WHERE active = 1")
+    db.execute("UPDATE users SET active = 1 WHERE id = ?", (user['id'],) )
+    db.commit()
     return jsonify({'status': 'User logged in succesfully'}), 200
 
 

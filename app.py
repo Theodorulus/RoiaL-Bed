@@ -1,10 +1,11 @@
 from flask import Flask
+from flask import session
 from flask_mqtt import Mqtt
 from threading import Thread
 import json
 import time
 import db
-import src.models.status as status
+from src.models.status import Status
 from src.example_endpoint import example_endpoint
 from src.height import height_bp
 from src.mode_selection import mode_bp
@@ -46,10 +47,13 @@ def start_app():
 
 # function for mqtt's thread    
 def background_thread():
+    global app
     while True:
         time.sleep(1)
-        message = json.dumps(status.get_status(), default=str)
-        mqtt.publish('smart_bed', message)
+        with app.app_context():
+            with app.test_request_context():
+                message = json.dumps(Status.get_status(), default=str)
+                mqtt.publish('smart_bed', message)
 
 
 def init_mqtt_thread():

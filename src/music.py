@@ -5,7 +5,6 @@ from flask import (
 )
 # from auth import login_required
 from db import get_db
-import requests
 #from playsound import playsound
 
 music_bp = Blueprint("music", __name__, url_prefix="/music")
@@ -28,7 +27,10 @@ def play_music(song_identifier):
 
     if len(query) == 1:
         #playsound(query[0][0])
-
+        db.execute("update songs set active = 0 where active = 1")
+        db.execute("update songs set active = 1 where id = ?", (query[0][0],))
+        db.commit()
+        
         return jsonify({
             'status': 'Playing song.',
             'data': {
