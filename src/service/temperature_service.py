@@ -4,6 +4,7 @@ from flask import (
 from db import get_db
 import requests
 
+
 def set_temperature(temperature):
     db = get_db()
     db.execute(
@@ -12,6 +13,7 @@ def set_temperature(temperature):
         (temperature,)
     )
     db.commit()
+
 
 def set_temperature_realtime():
     api_key = "778aeb380a12577397fc7d4e1a86a31f"
