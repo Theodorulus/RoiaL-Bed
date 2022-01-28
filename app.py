@@ -11,6 +11,7 @@ from src.controllers.mode_selection import mode_bp
 from src.controllers.temperature import temperature_bp
 from src.controllers.music import music_bp
 from src.controllers.auth import auth_bp
+from src.service.temperature_service import set_temperature_realtime
 
 app = None
 mqtt = None
@@ -51,6 +52,7 @@ def background_thread():
         time.sleep(1)
         with app.app_context():
             with app.test_request_context():
+                set_temperature_realtime()
                 message = json.dumps(Status.get_status(), default=str)
                 mqtt.publish('smart_bed', message)
 
