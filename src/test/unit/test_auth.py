@@ -17,16 +17,18 @@ def test_register_fail(client_no_login):
     assert json.loads(request_with_user.data.decode())["status"] == 'Password is required.'
     assert json.loads(request_with_pass.data.decode())["status"] == 'Username is required.'
 
+
 def test_register_existing_account(client_no_login):
     client_no_login.post('/auth/register', data=user_data, follow_redirects=True)
     request = client_no_login.post('/auth/register', data=user_data, follow_redirects=True)
-
     assert request.status_code == 409
+
 
 def test_register_success(client_no_login):
     request = client_no_login.post('/auth/register', data=user_data, follow_redirects=True)
     assert request.status_code == 200
     assert json.loads(request.data.decode())["status"] == 'User registered succesfully'
+
 
 def test_login_fail(client_no_login):
     client_no_login.post('/auth/register', data=user_data, follow_redirects=True)
@@ -34,10 +36,12 @@ def test_login_fail(client_no_login):
     assert request.status_code == 400
     assert json.loads(request.data.decode())["status"] == 'Username is required.'
 
+
 def test_login_not_found(client_no_login):
     request = client_no_login.post('/auth/login', data=user_data, follow_redirects=True)
     assert request.status_code == 404
     assert json.loads(request.data.decode())["status"] == 'User not found'
+
 
 def test_login_bad_credentials(client_no_login):
     client_no_login.post('/auth/register', data=user_data, follow_redirects=True)
@@ -49,16 +53,19 @@ def test_login_bad_credentials(client_no_login):
     assert request.status_code == 401
     assert json.loads(request.data.decode())["status"] == 'Username of password is incorrect'
 
+
 def test_login_success(client_no_login):
     client_no_login.post('/auth/register', data=user_data, follow_redirects=True)
     request = client_no_login.post('/auth/login', data=user_data, follow_redirects=True)
     assert request.status_code == 200
     assert json.loads(request.data.decode())["status"] == 'User logged in succesfully'
 
+
 def test_logout(client):
     request = client.get('/auth/logout')
     assert request.status_code == 200
     assert json.loads(request.data.decode())["status"] == 'User logged out succesfully'
+
 
 def test_get_height_no_login(client_no_login):
     request = client_no_login.get("/height")

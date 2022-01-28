@@ -5,11 +5,6 @@ import json
 import requests
 import src.service.temperature_service as temp_serv
 
-"""Initialize the testing environment
-Creates an app for testing that has the configuration flag ``TESTING`` set to
-``True``.
-"""
-
 temperature = 22
 
 

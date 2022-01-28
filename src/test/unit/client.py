@@ -12,6 +12,7 @@ user_data = {
     'password': 'test_pass'
 }
 
+
 @pytest.fixture
 def client():
     """
@@ -27,8 +28,6 @@ def client():
             client.post("/auth/login", data=user_data, follow_redirects=True)
 
             yield client
-
-
 
 
 @pytest.fixture
