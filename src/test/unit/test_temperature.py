@@ -3,6 +3,7 @@ from client import client
 from flask import jsonify
 import json
 import requests
+import src.service.temperature_service as temp_serv
 
 """Initialize the testing environment
 Creates an app for testing that has the configuration flag ``TESTING`` set to
@@ -15,6 +16,13 @@ def test_set_temperature(client):
     res = json.loads(request.data.decode())
     assert request.status_code == 200
     assert res["status"] == "Temperature successfully recorded."
+
+
+def test_set_get_temperature_service(client):
+    temperature = 22
+    temp_serv.set_temperature(temperature)
+    res = temp_serv.get_temperature()
+    assert res['value'] == temperature
 
 
 def test_get_temperature(client):

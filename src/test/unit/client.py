@@ -21,12 +21,15 @@ def client():
     """
     # app.config['TESTING'] = True
     local_app = start_app()
-    client = local_app.test_client()
+    with local_app.test_client() as client:
+        with local_app.app_context():
+            client.post("/auth/register", data=user_data, follow_redirects=True)
+            client.post("/auth/login", data=user_data, follow_redirects=True)
 
-    client.post("/auth/register", data=user_data, follow_redirects=True)
-    client.post("/auth/login", data=user_data, follow_redirects=True)
+            yield client
 
-    yield client
+
+
 
 @pytest.fixture
 def client_no_login():

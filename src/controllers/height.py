@@ -1,8 +1,7 @@
 from flask import (
     Blueprint, request, jsonify
 )
-from datetime import datetime
-from src.auth import login_required
+from src.controllers.auth import login_required
 from db import get_db
 
 height_bp = Blueprint('height', __name__, url_prefix='/height')
