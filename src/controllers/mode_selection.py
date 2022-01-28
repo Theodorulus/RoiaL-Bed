@@ -1,10 +1,9 @@
 from flask import (
     Blueprint, request, jsonify
 )
-from datetime import datetime
 # from auth import login_required
 from db import get_db
-from src.auth import login_required
+from src.controllers.auth import login_required
 
 mode_bp = Blueprint('mode_selection', __name__, url_prefix='/mode-selection')
 

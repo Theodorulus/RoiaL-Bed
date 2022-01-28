@@ -9,6 +9,7 @@ from db import get_db
 
 auth_bp = Blueprint('auth', __name__, url_prefix='/auth')
 
+
 @auth_bp.route('/register', methods=["POST"])
 def register():
     if 'username' not in request.form:
@@ -31,6 +32,7 @@ def register():
         return jsonify({'status': f'User {username} is already registered.'}), 409
 
     return jsonify({'status': 'User registered succesfully'}), 200
+
 
 @auth_bp.route('/login', methods=["POST"])
 def login():

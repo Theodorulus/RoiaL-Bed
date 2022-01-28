@@ -4,7 +4,8 @@ from flask import (
 # from auth import login_required
 from db import get_db
 import requests
-from src.auth import login_required
+from src.controllers.auth import login_required
+import src.service.temperature_service as temp_service
 
 temperature_bp = Blueprint('temperature', __name__, url_prefix='/temperature')
 
@@ -13,25 +14,12 @@ temperature_bp = Blueprint('temperature', __name__, url_prefix='/temperature')
 @login_required
 def set_temperature():
     if request.method == 'POST':
-        temperature = request.form['temperature']
-
-        if not temperature:
+        if 'temperature' not in request.form:
             return jsonify({'status': 'Temperature is required.'}), 400
+        temperature = request.form['temperature']
+        temp_service.set_temperature(temperature)
 
-        db = get_db()
-        db.execute(
-            """INSERT INTO temperatures (value)
-            VALUES (?)""",
-            (temperature,)
-        )
-        db.commit()
-
-    check = get_db().execute(
-        """SELECT *
-        FROM temperatures
-        ORDER BY TIMESTAMP DESC
-        LIMIT 1"""
-    ).fetchone()
+    check = temp_service.get_temperature()
 
     return jsonify({
         'status': 'Temperature successfully recorded.' if request.method == 'POST'

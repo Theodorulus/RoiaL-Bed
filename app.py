@@ -1,17 +1,16 @@
 from flask import Flask
-from flask import session
 from flask_mqtt import Mqtt
 from threading import Thread
 import json
 import time
 import db
 from src.models.status import Status
-from src.example_endpoint import example_endpoint
-from src.height import height_bp
-from src.mode_selection import mode_bp
-from src.temperature import temperature_bp
-from src.music import music_bp
-from src.auth import auth_bp
+# from src.example_endpoint import example_endpoint
+from src.controllers.height import height_bp
+from src.controllers.mode_selection import mode_bp
+from src.controllers.temperature import temperature_bp
+from src.controllers.music import music_bp
+from src.controllers.auth import auth_bp
 
 app = None
 mqtt = None
@@ -32,7 +31,7 @@ def start_app():
 
     # register blueprints
     app.register_blueprint(auth_bp)
-    app.register_blueprint(example_endpoint)
+    # app.register_blueprint(example_endpoint)
     app.register_blueprint(height_bp)
     app.register_blueprint(mode_bp)
     app.register_blueprint(temperature_bp)
