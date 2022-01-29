@@ -37,6 +37,7 @@ def start_app():
 
     return app
 
+
 def start_mqtt_app(testing: bool):
 
     app.config['MQTT_BROKER_URL'] = 'localhost'
@@ -52,6 +53,7 @@ def start_mqtt_app(testing: bool):
     init_mqtt_thread()
     
     return mqtt
+
 
 # function for mqtt's thread    
 def background_thread():
