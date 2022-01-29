@@ -40,7 +40,12 @@ You now should be able to read the messages published by the app
 
 ### Unit tests
 To run unit tests, use 
-`python -m pytest -v`
+`pytest -v -m "not integrationTest"`
+
+### Integration tests
+To run integration tests, use 
+`pytest -v -m integrationTest`
+
 
 To see unit tests coverage, use
 `coverage run -m pytest -v`
