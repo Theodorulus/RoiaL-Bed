@@ -18,14 +18,8 @@ mqtt = None
 
 
 def start_app():
-    global app, mqtt
+    global app
     app = Flask(__name__)
-    app.config['MQTT_BROKER_URL'] = 'localhost'
-    app.config['MQTT_BROKER_PORT'] = 1883
-    app.config['MQTT_USERNAME'] = ''
-    app.config['MQTT_PASSWORD'] = ''
-    app.config['MQTT_KEEPALIVE'] = 5
-    app.config['MQTT_TLS_ENABLED'] = False
 
     app.config.from_mapping(SECRET_KEY='shhhhhh',)
     app.url_map.strict_slashes = False
@@ -37,13 +31,27 @@ def start_app():
     app.register_blueprint(mode_bp)
     app.register_blueprint(temperature_bp)
     app.register_blueprint(music_bp)
-    mqtt = Mqtt(app)
 
     with app.app_context():
         db.init_app(app)
 
     return app
 
+def start_mqtt_app(testing: bool):
+
+    app.config['MQTT_BROKER_URL'] = 'localhost'
+    app.config['MQTT_BROKER_PORT'] = 1883
+    app.config['MQTT_USERNAME'] = ''
+    app.config['MQTT_PASSWORD'] = ''
+    app.config['MQTT_KEEPALIVE'] = 5
+    app.config['MQTT_TLS_ENABLED'] = testing
+
+    global mqtt
+    mqtt = Mqtt(app)
+
+    init_mqtt_thread()
+    
+    return mqtt
 
 # function for mqtt's thread    
 def background_thread():
@@ -65,5 +73,5 @@ def init_mqtt_thread():
 
 if __name__ == '__main__':
     app = start_app()
-    init_mqtt_thread()
+    mqtt = start_mqtt_app(True)
     app.run()

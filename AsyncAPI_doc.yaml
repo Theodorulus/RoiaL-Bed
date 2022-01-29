@@ -1,0 +1,39 @@
+asyncapi: 2.0.0
+info:
+  title: SmartBed
+  version: '1.0.0'
+  description: |
+    Manages Smart Bed
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  production:
+    url: mqtt://localhost:1883
+    protocol: mqtt
+    description: Mosquitto MQTT broker
+
+channels:
+  smart_bed:
+    subscribe:
+      operationId: Publish
+      message:
+        $ref : '#/components/messages/Publish'
+
+components:
+  messages:
+    Publish:
+      name: publish
+      title: Smart Bed publish event
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/Publish'
+
+  schemas:
+    Publish:
+      type: object
+      properties:
+        message:
+          type: string
+          description: "Test message"
