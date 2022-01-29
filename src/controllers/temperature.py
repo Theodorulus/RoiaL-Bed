@@ -9,14 +9,14 @@ temperature_bp = Blueprint('temperature', __name__, url_prefix='/temperature')
 
 @temperature_bp.route('/', methods=['GET', 'POST'])
 @login_required
-def set_or_get_temperature():
+def set_or_get_user_temperature():
     if request.method == 'POST':
         if 'temperature' not in request.form:
             return jsonify({'status': 'Temperature is required.'}), 400
         temperature = request.form['temperature']
         temp_service.set_temperature(temperature)
 
-    check = temp_service.get_temperature()
+    check = temp_service.get_user_temperature()
 
     if check is None:
         return jsonify({
@@ -30,5 +30,26 @@ def set_or_get_temperature():
             'id': check['id'],
             'last_updated': check['timestamp'],
             'temperature': check['value']
+        }
+    }), 200
+
+
+@temperature_bp.route('/real', methods=['GET'])
+@login_required
+def set_or_get_real_temperature():
+    check = temp_service.get_real_temperature()
+
+    if check is None:
+        return jsonify({
+            'status': 'No realtime temperature record found.'
+        }), 404
+
+    return jsonify({
+        'status': 'Realtime temperature successfully retrieved.',
+        'data': {
+            'id': check['id'],
+            'last_updated': check['timestamp'],
+            'temperature': check['value'],
+            'status': check['status']
         }
     }), 200

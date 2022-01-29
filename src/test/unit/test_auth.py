@@ -8,6 +8,7 @@ user_data = {
     'password': 'test_pass'
 }
 
+
 def test_register_fail(client_no_login):
     request_with_user = client_no_login.post('/auth/register', data={'username': "test_user"}, follow_redirects=True)
     request_with_pass = client_no_login.post('/auth/register', data={'password': "test_pass"}, follow_redirects=True)
