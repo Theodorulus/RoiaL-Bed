@@ -3,6 +3,7 @@ from flask import session
 from flask.cli import with_appcontext
 
 
+
 class Status:
     __instance = None
    

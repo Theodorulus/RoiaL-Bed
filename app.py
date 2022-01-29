@@ -75,5 +75,5 @@ def init_mqtt_thread():
 
 if __name__ == '__main__':
     app = start_app()
-    mqtt = start_mqtt_app(True)
+    mqtt = start_mqtt_app(False)
     app.run()
