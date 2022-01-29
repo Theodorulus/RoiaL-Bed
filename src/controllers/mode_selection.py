@@ -4,6 +4,9 @@ from flask import (
 # from auth import login_required
 from db import get_db
 from src.controllers.auth import login_required
+import src.service.mode_selection_service as mode_service
+import src.service.height_service as height_service
+import src.service.temperature_service as temp_service
 
 mode_bp = Blueprint('mode_selection', __name__, url_prefix='/mode-selection')
 
@@ -17,46 +20,17 @@ def select_mode():
 
         mode = request.form['mode']
 
-        db = get_db()
-        check = get_db().execute(
-            """SELECT id, value, height, temperature
-            FROM modes
-            WHERE value = ?""",
-            (mode,)
-        ).fetchone()
+        check = mode_service.get_mode_by_name(mode)
         if not check:
             return jsonify({'status': 'Mode is not valid.'}), 400
 
-        db.execute(
-            """UPDATE modes
-            SET active = 0
-            WHERE active = 1"""
-        )
-        db.execute(
-            """UPDATE modes
-            SET active = 1
-            WHERE value = ?""",
-            (mode,)
-        )
-        # set other features to some default values depending on the mode
-        db.execute(
-            """INSERT INTO heights (value)
-            VALUES (?)""",
-            (check['height'],)
-        )
-        db.execute(
-            """INSERT INTO temperatures (value)
-            VALUES (?)""",
-            (check['temperature'],)
-        )
-        # other
-        db.commit()
+        mode_service.set_active_mode(mode)
 
-    check = get_db().execute(
-        """SELECT id, value, height, temperature
-        FROM modes
-        WHERE active = 1"""
-    ).fetchone()
+        # set other features to some default values depending on the mode
+        height_service.set_height(check['height'])
+        temp_service.set_temperature(check['temperature'])
+
+    check = mode_service.get_active_mode()
 
     return jsonify({
         'status': 'Mode successfully selected.' if request.method == 'POST' else 'Mode successfully retrieved.',
@@ -79,19 +53,9 @@ def create_mode():
     height = request.form['height']
     temperature = request.form['temperature']
 
-    db = get_db()
-    db.execute(
-        """INSERT INTO modes (value, height, temperature)
-        VALUES (?, ?, ?)""",
-        (mode, height, temperature,)
-    )
-    db.commit()
+    mode_service.create_mode(mode, height, temperature)
 
-    check = get_db().execute(
-        """SELECT id, value, height, temperature
-        FROM modes
-        ORDER BY timestamp DESC"""
-    ).fetchone()
+    check = mode_service.get_last_created_mode()
 
     return jsonify({
         'status': 'Mode successfully added.',

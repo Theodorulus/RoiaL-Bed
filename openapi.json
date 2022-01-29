@@ -1,0 +1,58 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "RoiaL-Bed",
+        "description": "OpenAPI Specification.",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "contact": {
+            "name": "Roial Team",
+            "url": "https://github.com/Theodorulus/RoiaL-Bed",
+            "email": "team@roial.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:5000/"
+        }
+    ],
+    "tags": [
+        {
+            "name": "auth"
+        }
+    ],
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "summary": "Endpoint for registering new user",
+                "operationId": "register",
+                "description": "Register new users",
+                "tags": [
+                    "auth"
+                ],
+                "requestBody":{
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/RegistrationRequestData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullRegister"
+                    },
+                    "403": {
+                        "$ref": "#/components/responses/FailedRegistration"
+                    }
+                }
+            }
+        }
+    }
+}
