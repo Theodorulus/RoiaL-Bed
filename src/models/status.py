@@ -60,7 +60,7 @@ class Status:
         
         real_temperature = db.execute("SELECT * FROM real_temperatures ORDER BY TIMESTAMP DESC LIMIT 1").fetchone()
         if real_temperature:
-            temperature_status = real_temperature['status']
+            Status.temperature_status = real_temperature['status']
             real_temperature = real_temperature['value']
         
         current_user = db.execute("select * from users where active = 1 limit 1").fetchone()
@@ -76,5 +76,5 @@ class Status:
             "height": height,
             "set temperature": set_temperature,
             'real temperature': real_temperature,
-            'temperature status': temperature_status
+            'temperature status': Status.temperature_status
         }
