@@ -2,7 +2,7 @@ from flask import (
     Blueprint, request, jsonify
 )
 from src.controllers.auth import login_required
-from db import get_db
+import src.service.height_service as height_service
 
 height_bp = Blueprint('height', __name__, url_prefix='/height')
 
@@ -13,23 +13,16 @@ def set_height():
     if request.method == 'POST':
         if 'height' not in request.form:
             return jsonify({'status': 'Height is required.'}), 400
-
         height = request.form['height']
 
-        db = get_db()
-        db.execute(
-            """INSERT INTO heights (value)
-            VALUES (?)""",
-            (height,)
-        )
-        db.commit()
+        height_service.set_height(height)
     
-    check = get_db().execute(
-        """SELECT *
-        FROM heights
-        ORDER BY TIMESTAMP DESC
-        LIMIT 1"""
-    ).fetchone()
+    check = height_service.get_height()
+
+    if check is None:
+        return jsonify({
+            'status': 'No height record found.'
+        }), 404
 
     return jsonify({
         'status': 'Height succesfully updated.' if request.method == 'POST' else "Height successfully retrieved.",

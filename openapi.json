@@ -1,0 +1,849 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "RoiaL-Bed",
+        "description": "OpenAPI Specification.",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "contact": {
+            "name": "Roial Team",
+            "url": "https://github.com/Theodorulus/RoiaL-Bed",
+            "email": "team@roial.com"
+        }
+    },
+    "servers": [
+        {
+            "url": "http://127.0.0.1:5000/"
+        }
+    ],
+    "tags": [
+        {
+            "name": "auth"
+        }, 
+        {
+            "name": "height"
+        }, 
+        {
+            "name": "temperature"
+        }, 
+        {
+            "name": "music"
+        }, 
+        {
+            "name": "mode"
+        }
+    ],
+    "paths": {
+        "/auth/register": {
+            "post": {
+                "summary": "Endpoint for registering new user",
+                "operationId": "register",
+                "description": "Register new users",
+                "tags": [
+                    "auth"
+                ],
+                "requestBody":{
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/LoginAndRegistrationRequestData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullRegister"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/FailedRegistration"
+                    },
+                    "409": {
+                        "$ref": "#/components/responses/FailedRegistration"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "summary": "Endpoint for logging in existing user",
+                "operationId": "login",
+                "description": "Login existing user",
+                "tags": [
+                    "auth"
+                ],
+                "requestBody":{
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/LoginAndRegistrationRequestData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullLogin"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/FailedLogin"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/FailedLogin"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/FailedLogin"
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "get": {
+                "summary": "Endpoint for logging out existing",
+                "operationId": "logout",
+                "description": "Logout existing user",
+                "tags": [
+                    "auth"
+                ],
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullLogout"
+                    }
+                }
+            }
+        },
+        "/height": {
+            "post": {
+                "summary": "Endpoint for setting the height",
+                "operationId": "set_height",
+                "description": "Set bed height",
+                "tags": [
+                    "height"
+                ],
+                "requestBody":{
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/HeightRequestData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullHeight"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/FailedHeight"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/FailedHeight"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Endpoint for getting the height",
+                "operationId": "get_height",
+                "description": "Get bed height",
+                "tags": [
+                    "height"
+                ],
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullHeight"
+                    }
+                }
+            }
+        },
+        "/temperature": {
+            "post": {
+                "summary": "Endpoint for setting the user temperature",
+                "operationId": "set_temperature",
+                "description": "Set bed expected temperature",
+                "tags": [
+                    "temperature"
+                ],
+                "requestBody":{
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/TemperatureRequestData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullTemperature"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/FailedTemperature"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/FailedTemperature"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Endpoint for getting the user temperature",
+                "operationId": "get_temperature",
+                "description": "Get bed expected temperature",
+                "tags": [
+                    "temperature"
+                ],
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullTemperature"
+                    }
+                }
+            }
+        },
+        "/temperature/real": {
+            "get": {
+                "summary": "Endpoint for getting the real bed temperature",
+                "operationId": "get_real_temperature",
+                "description": "Get bed real temperature",
+                "tags": [
+                    "temperature"
+                ],
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullRealTemperature"
+                    },
+                    "404":{
+                        "$ref": "#/components/responses/FailedRealTemperature"
+                    }
+                }
+            }
+        },
+        "/music/play/<song_identifier>": {
+            "get": {
+                "summary": "Endpoint for playing a song",
+                "operationId": "play_song",
+                "description": "Play song identified by URL param 'song_identifier'",
+                "tags": [
+                    "music"
+                ],
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullPlayMusic"
+                    },
+                    "404":{
+                        "$ref": "#/components/responses/FailedPlayMusic"
+                    }
+                }
+            }
+        },
+        "/music/add": {
+            "post": {
+                "summary": "Endpoint for adding a new song",
+                "operationId": "add_song",
+                "description": "Add a new song",
+                "tags": [
+                    "music"
+                ],
+                "requestBody":{
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/AddSongRequestData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullAddSong"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/FailedAddSong"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/FailedAddSong"
+                    }
+                }
+            }
+        },
+        "/music/setalarm": {
+            "post": {
+                "summary": "Endpoint for setting an alarm",
+                "operationId": "set_alarm",
+                "description": "Set an alarm",
+                "tags": [
+                    "music"
+                ],
+                "requestBody":{
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/SetAlarmRequestData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullSetAlarm"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/FailedSetAlarm"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/FailedSetAlarm"
+                    }
+                }
+            }
+        },
+        "/mode-selection": {
+            "post": {
+                "summary": "Endpoint for selecting a mode",
+                "operationId": "set_mode",
+                "description": "Select a mode",
+                "tags": [
+                    "mode"
+                ],
+                "requestBody":{
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/SetModeRequestData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullSetMode"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/FailedSetMode"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/FailedSetMode"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Endpoint for getting the selected mode",
+                "operationId": "get_mode",
+                "description": "Get selected mode",
+                "tags": [
+                    "mode"
+                ],
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullSetMode"
+                    },
+                    "404":{
+                        "$ref": "#/components/responses/FailedGetMode"
+                    }
+                }
+            }
+        },
+        "/mode-selection/create": {
+            "post": {
+                "summary": "Endpoint for creating a new mode",
+                "operationId": "create_mode",
+                "description": "Create a mode",
+                "tags": [
+                    "mode"
+                ],
+                "requestBody":{
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/CreateModeRequestData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullSetMode"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/FailedCreateMode"
+                    }
+                }
+            }
+        }
+    },
+    
+    "components": {
+        "schemas":{
+            "LoginAndRegistrationRequestData":{
+                "type": "object",
+                "properties":{
+                    "username": {
+                        "type": "string"
+                    },
+                    "password":{
+                        "type":"string"
+                    }
+                }
+            },
+            "StatusResponse":{
+                "type": "object",
+                "properties":{
+                    "status":{
+                        "type": "string"
+                    }
+                }
+            },
+            "HeightRequestData": {
+                "type": "object",
+                "properties":{
+                    "height":{
+                        "type": "number"
+                    }
+                }
+            },
+            "TemperatureRequestData": {
+                "type": "object",
+                "properties":{
+                    "temperature":{
+                        "type": "number"
+                    }
+                }
+            },
+            "AddSongRequestData": {
+                "type": "object",
+                "properties":{
+                    "song_path":{
+                        "type": "string"
+                    }
+                }
+            },
+            "SetAlarmRequestData": {
+                "type": "object",
+                "properties":{
+                    "start":{
+                        "type": "datetime"
+                    }, 
+                    "song_id": {
+                        "type": "integer"
+                    }
+                }
+            },
+            "SetModeRequestData": {
+                "type": "object",
+                "properties":{
+                    "mode":{
+                        "type": "string"
+                    }
+                }
+            },
+            "CreateModeRequestData": {
+                "type": "object",
+                "properties":{
+                    "mode":{
+                        "type": "string"
+                    },
+                    "height":{
+                        "type": "number"
+                    },
+                    "temperature":{
+                        "type": "number"
+                    }
+                }
+            },
+            "HeightResponse": {
+                "type": "object",
+                "properties":{
+                    "status": {
+                        "type": "string"
+                    },
+                    "data":{
+                        "type":"object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "last_updated": {
+                                "type": "datetime"
+                            },
+                            "height": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            },
+            "TemperatureResponse": {
+                "type": "object",
+                "properties":{
+                    "status": {
+                        "type": "string"
+                    },
+                    "data":{
+                        "type":"object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "last_updated": {
+                                "type": "datetime"
+                            },
+                            "temperature": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            },
+            "RealTemperatureResponse": {
+                "type": "object",
+                "properties":{
+                    "status": {
+                        "type": "string"
+                    },
+                    "data":{
+                        "type":"object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "last_updated": {
+                                "type": "datetime"
+                            },
+                            "temperature": {
+                                "type": "number"
+                            },
+                            "status": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "PlaySongResponse": {
+                "type": "object",
+                "properties":{
+                    "status": {
+                        "type": "string"
+                    },
+                    "data":{
+                        "type":"object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "timestamp": {
+                                "type": "datetime"
+                            },
+                            "path": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            },
+            "AddSongResponse": {
+                "type": "object",
+                "properties":{
+                    "status": {
+                        "type": "string"
+                    },
+                    "data":{
+                        "type":"object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "timestamp": {
+                                "type": "datetime"
+                            },
+                            "song_path": {
+                                "type": "string"
+                            },
+                            "active": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            },
+            "SetAlarmResponse": {
+                "type": "object",
+                "properties":{
+                    "status": {
+                        "type": "string"
+                    },
+                    "data":{
+                        "type":"object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "start": {
+                                "type": "datetime"
+                            },
+                            "song_id": {
+                                "type": "integer"
+                            },
+                            "duration": {
+                                "type": "integer"
+                            }
+                        }
+                    }
+                }
+            },
+            "SetModeResponse": {
+                "type": "object",
+                "properties":{
+                    "status": {
+                        "type": "string"
+                    },
+                    "data":{
+                        "type":"object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "mode": {
+                                "type": "string"
+                            },
+                            "height": {
+                                "type": "number"
+                            },
+                            "temperature": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "responses": {
+            "SuccessfullRegister": {
+                "description":"New user has been successfully registered",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "FailedRegistration": {
+                "description":"Registration failed",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullLogin": {
+                "description":"User has been successfully logged in",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "FailedLogin": {
+                "description":"Login failed",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullLogout": {
+                "description":"User has been successfully logged out",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "FailedHeight": {
+                "description":"Height request failed",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullHeight": {
+                "description":"Height successfully changed/retrieved",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/HeightResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullTemperature": {
+                "description":"Temperature successfully changed/retrieved",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/TemperatureResponse"
+                        }
+                    }
+                }
+            },
+            "FailedTemperature": {
+                "description":"Temperature request failed",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullRealTemperature": {
+                "description":"Real temperature successfully retrieved",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/RealTemperatureResponse"
+                        }
+                    }
+                }
+            },
+            "FailedRealTemperature": {
+                "description":"Real temperature record not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullPlayMusic": {
+                "description":"Song started playing",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/PlaySongResponse"
+                        }
+                    }
+                }
+            },
+            "FailedPlayMusic": {
+                "description":"Song not found",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullAddSong": {
+                "description":"Song successfully added",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/AddSongResponse"
+                        }
+                    }
+                }
+            },
+            "FailedAddSong": {
+                "description":"Song was not added due to an error",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullSetAlarm": {
+                "description":"Alarm successfully added",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/SetAlarmResponse"
+                        }
+                    }
+                }
+            },
+            "FailedSetAlarm": {
+                "description":"Alarm was not set",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullSetMode": {
+                "description":"Mode successfully selected",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/SetModeResponse"
+                        }
+                    }
+                }
+            },
+            "FailedSetMode": {
+                "description":"Mode was not selected",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "FailedGetMode": {
+                "description":"Mode could not be retrieved",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "FailedCreateMode": {
+                "description":"Mode could not be created",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
