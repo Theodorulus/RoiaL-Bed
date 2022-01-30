@@ -2,7 +2,6 @@ from flask import (
     Blueprint, request, jsonify
 )
 # from auth import login_required
-from db import get_db
 from src.controllers.auth import login_required
 import src.service.mode_selection_service as mode_service
 import src.service.height_service as height_service
@@ -31,6 +30,11 @@ def select_mode():
         temp_service.set_temperature(check['temperature'])
 
     check = mode_service.get_active_mode()
+
+    if check is None:
+        return jsonify({
+            'status': 'No mode record found.'
+        }), 404
 
     return jsonify({
         'status': 'Mode successfully selected.' if request.method == 'POST' else 'Mode successfully retrieved.',

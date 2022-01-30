@@ -18,11 +18,16 @@ def test_set_height_success(client):
     assert json.loads(request.data.decode())["data"]["height"] == 15
 
 
-def test_get_height(client):
+def test_get_height_success(client):
     client.post("/height", data={"height": 10}, follow_redirects=True)
     request = client.get("/height")
     assert request.status_code == 200
     assert json.loads(request.data.decode())["data"]["height"] == 10
+
+def test_get_height_fail(client):
+    request = client.get("/height")
+    assert request.status_code == 404
+    assert json.loads(request.data.decode())["status"] == "No height record found."
 
 
 def test_get_set_height(client):

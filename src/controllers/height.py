@@ -19,6 +19,11 @@ def set_height():
     
     check = height_service.get_height()
 
+    if check is None:
+        return jsonify({
+            'status': 'No height record found.'
+        }), 404
+
     return jsonify({
         'status': 'Height succesfully updated.' if request.method == 'POST' else "Height successfully retrieved.",
         'data': {
