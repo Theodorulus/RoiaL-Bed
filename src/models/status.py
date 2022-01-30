@@ -2,17 +2,17 @@ from db import get_db
 from flask import session
 from flask.cli import with_appcontext
 
-
-
 class Status:
     __instance = None
    
     selected_mode = None
-    future_alarms = None
+    alarms = []
     height = None
     last_sleep_stats = None
     last_played_song = None
-    temperature = None
+    set_temperature = None
+    real_temperature = None
+    temperature_status = None
     current_user = None
    
     @staticmethod 
@@ -35,11 +35,13 @@ class Status:
         if selected_mode:
             selected_mode = selected_mode['id']
         
-        future_alarms = db.execute("select * from alarms where start > DateTime('now') ").fetchall()
-        if future_alarms:
-            for alarm in future_alarms:
+        db_alarms = db.execute("select * from alarms").fetchall()
+        if db_alarms:
+            Status.alarms.clear()
+            for alarm in db_alarms:
                 alarm = dict(zip(alarm.keys(), alarm))
-            
+                Status.alarms.append(alarm)
+                
         last_played_song = db.execute("select * from songs where active = 1 limit 1").fetchone()
         if last_played_song:
             last_played_song = dict(zip(last_played_song.keys(), last_played_song))
@@ -52,9 +54,14 @@ class Status:
         if last_sleep_stats:
             last_sleep_stats = dict(zip(last_sleep_stats.keys(), last_sleep_stats))
           
-        temperature = db.execute("SELECT * FROM temperatures ORDER BY TIMESTAMP DESC LIMIT 1").fetchone()
-        if temperature:
-            temperature = temperature['value']
+        set_temperature = db.execute("SELECT * FROM temperatures ORDER BY TIMESTAMP DESC LIMIT 1").fetchone()
+        if set_temperature:
+            set_temperature = set_temperature['value']
+        
+        real_temperature = db.execute("SELECT * FROM real_temperatures ORDER BY TIMESTAMP DESC LIMIT 1").fetchone()
+        if real_temperature:
+            temperature_status = real_temperature['status']
+            real_temperature = real_temperature['value']
         
         current_user = db.execute("select * from users where active = 1 limit 1").fetchone()
         if current_user:
@@ -62,10 +69,12 @@ class Status:
           
         return {
             "selected_mode": selected_mode,
-            "future_alarms": future_alarms,
+            "alarms": Status.alarms,
             "current_user": current_user,
             "last_played_song": last_played_song,
             "last_sleep_stats": last_sleep_stats,
             "height": height,
-            "temperature": temperature
+            "set temperature": set_temperature,
+            'real temperature': real_temperature,
+            'temperature status': temperature_status
         }
