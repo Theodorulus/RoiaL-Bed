@@ -2,6 +2,7 @@ from db import get_db
 from flask import session
 from flask.cli import with_appcontext
 
+
 class Status:
     __instance = None
    
@@ -14,7 +15,7 @@ class Status:
     real_temperature = None
     temperature_status = None
     current_user = None
-   
+
     @staticmethod 
     def getInstance():
         if Status.__instance is None:
@@ -50,7 +51,8 @@ class Status:
         if height:
             height = height['value']
           
-        last_sleep_stats = db.execute("select * from sleep_stats order by end desc limit 1").fetchone()
+        last_sleep_stats = db.execute("select * from sleep_stats where rating != 0 order by end desc limit 1")\
+            .fetchone()
         if last_sleep_stats:
             last_sleep_stats = dict(zip(last_sleep_stats.keys(), last_sleep_stats))
           

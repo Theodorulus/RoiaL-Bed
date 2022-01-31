@@ -4,6 +4,7 @@ from flask import (
 )
 from db import get_db
 
+
 def play_music(song_identifier):
     db = get_db()
 
@@ -19,40 +20,14 @@ def play_music(song_identifier):
         db.commit()
         
     return query
-        # return jsonify({
-        #     'status': 'Playing song.',
-        #     'data': {
-        #         'id': query[0][0],
-        #         'timestamp': query[0][1],
-        #         'path': query[0][2]
-        #     }
-        # }), 200
-
-    # else:
-    #     return jsonify({
-    #         'status': 'Could not find song.',
-    #     }), 400
 
 
 def add_music_to_db(song_path):
     db = get_db()
 
-    # song_path = request.form["song_path"]
-
-    # if not song_path:
-    #     raise error
-    #     return jsonify({'status': 'path required.'}), 400
-
     db.execute("insert into songs(song_path) values(?)", (song_path,))
     db.commit()
 
-    
-    # return jsonify({
-    #         'status': 'Added song.',
-    #         'data': {
-    #             'path': song_path
-    #     }
-    #     }), 200
 
 def get_last_song():
     check = get_db().execute(
@@ -64,6 +39,19 @@ def get_last_song():
 
     return check
 
+
+def get_upcoming_alarm():
+    check = get_db().execute(
+        """SELECT *
+        FROM alarms
+        WHERE start >= CURRENT_TIMESTAMP
+        ORDER BY start
+        LIMIT 1"""
+    ).fetchone()
+
+    return check
+
+
 def get_last_alarm():
     check = get_db().execute(
         """SELECT *
@@ -74,6 +62,7 @@ def get_last_alarm():
 
     return check
 
+
 def set_alarm(song_id, start, duration):
     db = get_db()
 
@@ -82,14 +71,3 @@ def set_alarm(song_id, start, duration):
     if len(query) == 1:
         db.execute("insert into alarms(start, duration, song_id) values(?,?,?)", (start, duration, song_id))
         db.commit()
-
-    #     return jsonify({
-    #             'status': 'Added alarm.',
-    #             'data': {
-    #                 'start': start,
-    #                 'song id': song_id
-    #         }
-    #         }), 200
-
-    # else:
-    #     return jsonify({'status': 'bad song id.'}), 400
