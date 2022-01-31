@@ -10,7 +10,7 @@ class Status:
     alarms = []
     height = None
     last_sleep_stats = None
-    last_played_song = None
+    playing_song = None
     set_temperature = None
     real_temperature = None
     temperature_status = None
@@ -43,9 +43,9 @@ class Status:
                 alarm = dict(zip(alarm.keys(), alarm))
                 Status.alarms.append(alarm)
                 
-        last_played_song = db.execute("select * from songs where active = 1 limit 1").fetchone()
-        if last_played_song:
-            last_played_song = dict(zip(last_played_song.keys(), last_played_song))
+        playing_song = db.execute("select id, song_path from songs where active = 1 limit 1").fetchone()
+        if playing_song:
+            playing_song = dict(zip(playing_song.keys(), playing_song))
           
         height = db.execute("select * from heights order by timestamp desc limit 1").fetchone()
         if height:
@@ -73,10 +73,10 @@ class Status:
             "selected_mode": selected_mode,
             "alarms": Status.alarms,
             "current_user": current_user,
-            "last_played_song": last_played_song,
+            "playing_song": playing_song,
             "last_sleep_stats": last_sleep_stats,
             "height": height,
-            "set temperature": set_temperature,
-            'real temperature': real_temperature,
-            'temperature status': Status.temperature_status
+            "set_temperature": set_temperature,
+            'real_temperature': real_temperature,
+            'temperature_status': Status.temperature_status
         }

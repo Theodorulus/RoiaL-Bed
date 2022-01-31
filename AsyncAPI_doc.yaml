@@ -34,6 +34,54 @@ components:
     Publish:
       type: object
       properties:
-        message:
+        selected_mode:
+          type: integer
+          description: "Selected mode id"
+        alarms: 
+          type: [object]
+          description: "Scheduled alarms"
+          properties:
+            id:
+              type: integer
+              description: "Alarm id"
+            start:
+              type: dateTime
+              description: "Alarm time to ring"
+            duration:
+              type: integer
+              description: "Alarm ringing duration"
+            song_id: 
+              type: integer
+              description:  "Alarm sound"
+        currentUser:
+          type: integer
+          description: "Id of the connected user"
+        playing_song:
+          type: object
+          description: "The current playing song"
+          properties:
+            id:
+              type: integer
+              description: "Song id"
+            song_path:
+              type: string
+              description: "Path to audio file"
+        last_sleeping_stats:
+          type: object
+          description: "Stats from last sleep"
+          properties:
+            TBD
+        height: 
+          type: integer
+          description: "The height of the bed"
+        set_temperature:
+          type: integer
+          description: "User set desired mattress temperature"
+        real_temperature:
+          type: integer
+          description: "Real mattress temperature"
+        temperature_status:
           type: string
-          description: "Test message"
+          description: "How is temperature is changing"
+          examples: ["Doin nothing", "Heating", "Cooling"]
+
