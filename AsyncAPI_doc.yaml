@@ -70,7 +70,18 @@ components:
           type: object
           description: "Stats from last sleep"
           properties:
-            TBD
+            id:
+              type: integer
+              description: "Id for sleep stats"
+            start: 
+              type: dateTime
+              decscription: "Start time of sleep"
+            end: 
+              type: dateTime
+              decscription: "End time of sleep"
+            rating:
+              type: integer
+              description: "Sleep rating"
         height: 
           type: integer
           description: "The height of the bed"

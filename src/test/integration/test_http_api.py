@@ -73,3 +73,25 @@ def test_add_alarm(client):
     assert request.status_code == 200
     assert res["status"] == 'Added alarm.'
     
+@pytest.mark.integrationTest
+def test_sleep_stats_and_mode_selection(client):
+    res_mode_creation = client.post("/mode-selection/create", data=create_mode_body, follow_redirects=True)
+    res_mode_selection = client.post("/mode-selection", data={"mode": "test_mode"}, follow_redirects=True)
+    res_post_sleepStats = client.post("/sleepstats", data={"duration": 28800, "rating": 8}, follow_redirects=True)
+    res_get_sleepStats= client.get("/sleepstats")
+    
+    assert res_mode_creation.status_code == 200
+    assert res_mode_selection.status_code == 200
+    assert res_post_sleepStats.status_code == 200
+    assert res_get_sleepStats.status_code == 200
+    
+    res_get_sleepStats = json.loads(res_get_sleepStats.data.decode())
+    res_mode_selection = json.loads(res_mode_selection.data.decode())
+    
+    assert res_mode_selection["data"]["mode"] == create_mode_body["mode"]
+    assert res_mode_selection["data"]["height"] == create_mode_body["height"]
+    assert res_mode_selection["data"]["temperature"] == create_mode_body["temperature"]
+    assert res_get_sleepStats["status"] == "Sleep stats successfully retrieved."
+    assert res_get_sleepStats["data"]["rating"] == 8
+    
+    
