@@ -77,11 +77,11 @@ def set_alarm():
 
     else:
         return jsonify({
-        'status': 'Added alarm.',
-        'data': {
-            'id': check['id'],
-            'start': check['start'],
-            'song_id': check['song_id'],
-            'duration': check['duration']
-        }
-    }), 200
+            'status': 'Added alarm.',
+            'data': {
+                'id': check['id'],
+                'start': check['start'],
+                'song_id': check['song_id'],
+                'duration': check['duration']
+            }
+        }), 200

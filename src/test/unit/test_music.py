@@ -6,7 +6,6 @@ import requests
 import src.service.music_service as music_service
 
 
-
 def test_add_song(client):
     request = client.post('/music/add', data={"song_path": "Song_Path_Example"}, follow_redirects=True)
     res = json.loads(request.data.decode())

@@ -31,7 +31,7 @@ def test_get_sleep_stats(client):
 def test_get_stats_average_fail(client):
     request = client.get("/sleepstats/average")
     response = json.loads(request.data.decode())
-    assert request.status_code == 400
+    assert request.status_code == 404
     assert response['status'] == 'No average to calculate.'
 
 

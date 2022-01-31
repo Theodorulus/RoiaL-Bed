@@ -29,7 +29,7 @@ def get_stats():
     check = stats_service.get_last_complete_sleep()
 
     if check is None:
-        return jsonify({'status': "No stats to retrieve."}), 400
+        return jsonify({'status': "No stats to retrieve."}), 404
 
     return jsonify({
         'status': 'Sleep stats successfully recorded.' if request.method == 'POST'
@@ -49,7 +49,7 @@ def get_stats_average():
     check = stats_service.get_average_rating()
 
     if check['average'] is None:
-        return jsonify({'status': "No average to calculate."}), 400
+        return jsonify({'status': "No average to calculate."}), 404
 
     return jsonify({
         'status': "Average rating successfully calculated.",
