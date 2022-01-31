@@ -9,6 +9,7 @@ The app was created to improve your sleep quality and help you relax more.
 
 <li><a href="https://www.python.org/"> Python </a></li>
 <li><a href="https://flask.palletsprojects.com/en/2.0.x/"> Flask </a></li>
+<li> <a href="https://docs.python-requests.org/en/latest/"> Requests</a> (for API calls to OpenWeather API)</li>
 <li><a href="https://docs.pytest.org/en/6.2.x/"> Pytest </a> (for automation testing)</li>
 <li> <a href="https://coverage.readthedocs.io/en/6.3/"> Coverage</a> (for automation testing coverage)</li>
 
