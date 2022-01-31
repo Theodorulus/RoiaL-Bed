@@ -11,6 +11,7 @@ from src.controllers.mode_selection import mode_bp
 from src.controllers.temperature import temperature_bp
 from src.controllers.music import music_bp
 from src.controllers.auth import auth_bp
+from src.controllers.sleep_stats import sleep_stats_bp, rate_sleep
 from src.service.mqtt_service import update_database_mqtt
 
 app = None
@@ -31,6 +32,7 @@ def start_app():
     app.register_blueprint(mode_bp)
     app.register_blueprint(temperature_bp)
     app.register_blueprint(music_bp)
+    app.register_blueprint(sleep_stats_bp)
 
     with app.app_context():
         db.init_app(app)
@@ -62,6 +64,7 @@ def background_thread():
         time.sleep(1)
         with app.app_context():
             with app.test_request_context():
+                rate_sleep()
                 update_database_mqtt()
                 message = json.dumps(Status.get_status(), default=str)
                 mqtt.publish('smart_bed', message)
