@@ -81,7 +81,7 @@ All of the Rest API HTTP functionalities can be found in the <a href="https://gi
 To test them, you need to have the app running and call the API using your API platform app (Example: <a href="https://www.postman.com/"> Postman</a>).
 
 ## Roadman
-See the <a href="https://github.com/Theodorulus/RoiaL-Bed/projects/1"> open issues </a> for a full list of proposed features.
+See the <a href="https://github.com/Theodorulus/RoiaL-Bed/projects/1"> open issues </a> for the full list of features.
 
 ## Contribution
 
