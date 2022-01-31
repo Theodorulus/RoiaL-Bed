@@ -2,10 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f1f5f3b1-818b-47aa-a31e-f95e8cf99491" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/controllers/sleep_stats.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/test/unit/test_sleep_stats.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/service/sleep_stats_service.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/sleep_stats.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/sleep_stats.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/unit/test_sleep_stats.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/unit/test_sleep_stats.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -147,7 +148,8 @@
       <workItem from="1643551144641" duration="203000" />
       <workItem from="1643551351709" duration="43000" />
       <workItem from="1643551419987" duration="40000" />
-      <workItem from="1643551471682" duration="21986000" />
+      <workItem from="1643551471682" duration="22341000" />
+      <workItem from="1643648820478" duration="3658000" />
     </task>
     <servers />
   </component>

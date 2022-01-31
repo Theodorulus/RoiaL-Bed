@@ -26,3 +26,20 @@ def test_get_sleep_stats(client):
     assert request.status_code == 200
     assert response["status"] == "Sleep stats successfully retrieved."
     assert response["data"]["rating"] == 6
+
+
+def test_get_stats_average_fail(client):
+    request = client.get("/sleepstats/average")
+    response = json.loads(request.data.decode())
+    assert request.status_code == 400
+    assert response['status'] == 'No average to calculate.'
+
+
+def test_get_stats_average_success(client):
+    client.post("/sleepstats", data={"duration": 20, "rating": 5}, follow_redirects=True)
+    client.post("/sleepstats", data={"duration": 14, "rating": 3}, follow_redirects=True)
+    request = client.get("/sleepstats/average")
+    response = json.loads(request.data.decode())
+    assert request.status_code == 200
+    assert response["status"] == "Average rating successfully calculated."
+    assert json.loads(request.data.decode())["data"]["average"] == 4
