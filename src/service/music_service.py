@@ -1,4 +1,3 @@
-from distutils.log import error
 from flask import (
     Blueprint, request, jsonify
 )

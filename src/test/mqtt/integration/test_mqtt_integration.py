@@ -13,7 +13,8 @@ def client_mqtt():
     with local_http_app.test_client():
         with local_http_app.app_context():
             yield local_mqtt_app
-    
+
+
 @pytest.mark.integrationTest
 def test_mqtt_status_publishing(client_mqtt):
     message = json.dumps(Status.get_status(), default=str)
