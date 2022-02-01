@@ -4,7 +4,6 @@ from flask import (
 from datetime import datetime, timedelta
 from src.controllers.auth import login_required
 import src.service.sleep_stats_service as stats_service
-from db import get_db
 
 sleep_stats_bp = Blueprint('sleep_stats', __name__, url_prefix='/sleepstats')
 

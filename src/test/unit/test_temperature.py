@@ -41,18 +41,18 @@ def test_get_user_temperature(client):
     assert json.loads(request.data.decode())["data"]["temperature"] == temperature
 
 
+def test_get_real_temperature_not_found(client):
+    request = client.get("/temperature/real")
+    assert request.status_code == 404
+    assert "no realtime temperature record found" in json.loads(request.data.decode())["status"].lower()
+
+
 def test_set_get_realtime_temperature_service(client):
     realtime_temperature = temp_serv.calculate_realtime_temperature()
 
     temp_serv.update_realtime_temperature()
     res = temp_serv.get_real_temperature()
     assert res['value'] == realtime_temperature
-
-
-def test_get_real_temperature_not_found(client):
-    request = client.get("/temperature/real")
-    assert request.status_code == 404
-    assert "no realtime temperature record found" in json.loads(request.data.decode())["status"].lower()
 
 
 def test_get_real_temperature(client):

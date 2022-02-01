@@ -34,6 +34,9 @@
         }, 
         {
             "name": "mode"
+        },
+        {
+            "name": "sleep"
         }
     ],
     "paths": {
@@ -385,6 +388,72 @@
                     }
                 }
             }
+        },
+        "/sleepstats": {
+            "post": {
+                "summary": "Endpoint for inserting sleep data",
+                "operationId": "set_sleepstats",
+                "description": "Insert sleep stats",
+                "tags": [
+                    "sleep"
+                ],
+                "requestBody":{
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "#/components/schemas/SetSleepStatsRequestData"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullSetSleepStats"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/FailedSetSleepStats"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/FailedSetSleepStats"
+                    }
+                }
+            },
+            "get": {
+                "summary": "Endpoint for getting last sleep's stats",
+                "operationId": "get_sleepstats",
+                "description": "Get last sleep's stats",
+                "tags": [
+                    "sleep"
+                ],
+                "responses": {
+                    "200":{
+                        "$ref": "#/components/responses/SuccessfullSetSleepStats"
+                    },
+                    "404":{
+                        "$ref": "#/components/responses/FailedGetSleepStats"
+                    }
+                }
+            }
+        },
+        "/sleepstats/average": {
+            "get": {
+                "summary": "Endpoint for getting the average sleep rating",
+                "operationId": "get_sleepstats_average_rating",
+                "description": "Get the average rating of sleep",
+                "tags": [
+                    "sleep"
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/SuccessfullGetSleepStatsAverage"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/FailedGetSleepStatsAverage"
+                    }
+                }
+            }
         }
     },
     
@@ -462,6 +531,17 @@
                         "type": "number"
                     },
                     "temperature":{
+                        "type": "number"
+                    }
+                }
+            },
+            "SetSleepStatsRequestData": {
+                "type": "object",
+                "properties":{
+                    "duration":{
+                        "type": "number"
+                    },
+                    "rating":{
                         "type": "number"
                     }
                 }
@@ -626,6 +706,47 @@
                                 "type": "number"
                             },
                             "temperature": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            },
+            "SetSleepStatsResponse": {
+                "type": "object",
+                "properties":{
+                    "status": {
+                        "type": "string"
+                    },
+                    "data":{
+                        "type":"object",
+                        "properties": {
+                            "id": {
+                                "type": "integer"
+                            },
+                            "start": {
+                                "type": "datetime"
+                            },
+                            "end": {
+                                "type": "datetime"
+                            },
+                            "rating": {
+                                "type": "number"
+                            }
+                        }
+                    }
+                }
+            },
+            "SleetStatsAverageResponse": {
+                "type": "object",
+                "properties":{
+                    "status": {
+                        "type": "string"
+                    },
+                    "data":{
+                        "type":"object",
+                        "properties": {
+                            "average": {
                                 "type": "number"
                             }
                         }
@@ -836,6 +957,56 @@
             },
             "FailedCreateMode": {
                 "description":"Mode could not be created",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullSetSleepStats": {
+                "description":"Stats successfully recorded",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/SetSleepStatsResponse"
+                        }
+                    }
+                }
+            },
+            "FailedSetSleepStats": {
+                "description":"Stats could not be recorded",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "FailedGetSleepStats": {
+                "description":"Stats could not be retrtieved",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/StatusResponse"
+                        }
+                    }
+                }
+            },
+            "SuccessfullGetSleepStatsAverage": {
+                "description":"Sleep average rating successfully retrieved",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "$ref": "#/components/schemas/SleetStatsAverageResponse"
+                        }
+                    }
+                }
+            },
+            "FailedGetSleepStatsAverage": {
+                "description":"Sleep average rating could not ge retrieved",
                 "content": {
                     "application/json": {
                         "schema": {
