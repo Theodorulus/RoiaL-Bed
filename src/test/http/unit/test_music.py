@@ -25,7 +25,7 @@ def test_play_song_empty_db(client):
     assert "Could not find song." in json.loads(request.data.decode())["status"]
 
     
-def test_set_get_user_temperature_service(client):
+def test_get_last_song(client):
     music_service.add_music_to_db("path")
     res = music_service.get_last_song()
     assert res['song_path'] == "path"
