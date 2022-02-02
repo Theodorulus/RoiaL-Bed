@@ -5,13 +5,22 @@
 This is a backend application for a smart bed. 
 The app was created to improve your sleep quality and help you relax more.
 
+### Features
+
+<li>Change bed height</li>
+<li>Change bed temperature</li>
+<li>Set custom bed modes</li>
+<li>Play music</li>
+<li>Set an alarm</li>
+<li>Get sleep statistics</li>
+
 ### Built With
 
 <li><a href="https://www.python.org/"> Python </a></li>
 <li><a href="https://flask.palletsprojects.com/en/2.0.x/"> Flask </a></li>
-<li> <a href="https://docs.python-requests.org/en/latest/"> Requests</a> (for API calls to OpenWeather API)</li>
+<li><a href="https://docs.python-requests.org/en/latest/"> Requests</a> (for API calls to OpenWeather API)</li>
 <li><a href="https://docs.pytest.org/en/6.2.x/"> Pytest </a> (for automation testing)</li>
-<li> <a href="https://coverage.readthedocs.io/en/6.3/"> Coverage</a> (for automation testing coverage)</li>
+<li><a href="https://coverage.readthedocs.io/en/6.3/"> Coverage</a> (for automation testing coverage)</li>
 
 ## Getting Started
 
